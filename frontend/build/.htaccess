@@ -1,4 +1,1 @@
-AuthType Basic
-AuthName "CSH Predict Access"
-AuthUserFile /home/ubuntu/csh-predict/.htpasswd
-Require valid-user
+
