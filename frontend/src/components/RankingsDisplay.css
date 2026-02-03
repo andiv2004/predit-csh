@@ -1,0 +1,224 @@
+.rankings-display {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(255, 193, 7, 0.1);
+  overflow: hidden;
+  margin-top: 2rem;
+  border: 1px solid rgba(255, 193, 7, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.rankings-header {
+  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+  color: #0f0f1e;
+  padding: 1.5rem;
+  border-bottom: 4px solid #ffd700;
+}
+
+.rankings-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+}
+
+.rankings-header p {
+  margin: 0 0 1rem 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.rankings-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  background: rgba(255, 193, 7, 0.15);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  transition: all 0.3s ease;
+}
+
+.stat.top-1 {
+  background: rgba(255, 193, 7, 0.25);
+  border-color: rgba(255, 193, 7, 0.5);
+}
+
+.stat.top-2 {
+  background: rgba(192, 192, 192, 0.15);
+  border-color: rgba(192, 192, 192, 0.3);
+}
+
+.stat.top-3 {
+  background: rgba(205, 127, 50, 0.15);
+  border-color: rgba(205, 127, 50, 0.3);
+}
+
+.stat .label {
+  opacity: 0.8;
+  font-size: 0.9rem;
+  color: #b3b3ff;
+}
+
+.stat .value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffd700;
+}
+
+.stat .team-name {
+  font-size: 0.8rem;
+  color: #b3b3ff;
+  text-align: center;
+  margin-top: 0.2rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead {
+  background-color: rgba(255, 193, 7, 0.1);
+  border-bottom: 2px solid rgba(255, 193, 7, 0.2);
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #ffd700;
+  transition: all 0.3s ease;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 193, 7, 0.1);
+  color: #b3b3ff;
+  transition: all 0.3s ease;
+}
+
+.rank-position {
+  font-weight: 700;
+  color: #ffd700;
+  background-color: rgba(255, 193, 7, 0.15);
+  text-align: center;
+}
+
+.team-number {
+  font-weight: 600;
+  color: #00ff88;
+}
+
+.team-name {
+  font-size: 0.9rem;
+}
+
+.ranking-score {
+  font-weight: 600;
+  text-align: center;
+  color: #ffd700;
+}
+
+.win-loss {
+  text-align: center;
+  font-weight: 600;
+  color: #00ff88;
+}
+
+.tbp1 {
+  text-align: center;
+  font-weight: 500;
+}
+
+.opr {
+  text-align: center;
+  font-weight: 500;
+}
+
+.auto-opr {
+  text-align: center;
+  font-weight: 500;
+  color: #b300ff;
+}
+
+tbody tr.top-1 {
+  background-color: rgba(255, 193, 7, 0.1);
+  box-shadow: inset 0 0 10px rgba(255, 193, 7, 0.1);
+}
+
+tbody tr.top-2 {
+  background-color: rgba(192, 192, 192, 0.08);
+}
+
+tbody tr.top-3 {
+  background-color: rgba(205, 127, 50, 0.08);
+}
+
+tbody tr:hover {
+  background-color: rgba(255, 193, 7, 0.12);
+  box-shadow: inset 0 0 15px rgba(255, 193, 7, 0.15);
+}
+
+.export-section {
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 193, 7, 0.2);
+  display: flex;
+  justify-content: center;
+}
+
+.export-btn {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+  color: #0f0f1e;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+}
+
+.export-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+}
+
+.no-data {
+  padding: 2rem;
+  text-align: center;
+  color: #b3b3ff;
+}
+
+@media (max-width: 768px) {
+  th,
+  td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .rankings-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .rankings-stats {
+    flex-direction: column;
+  }
+
+  .stat {
+    width: 100%;
+  }
+}

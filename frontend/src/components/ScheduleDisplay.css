@@ -1,0 +1,184 @@
+.schedule-display {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+  overflow: hidden;
+  margin-top: 2rem;
+  border: 1px solid rgba(0, 255, 136, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.schedule-header {
+  background: linear-gradient(135deg, #00ff88 0%, #b300ff 100%);
+  color: #0f0f1e;
+  padding: 1.5rem;
+  border-bottom: 4px solid #00ff88;
+}
+
+.schedule-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+}
+
+.schedule-header p {
+  margin: 0 0 1rem 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.schedule-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  background: rgba(0, 255, 136, 0.1);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat.perfect {
+  background: rgba(0, 255, 136, 0.2);
+  border-color: rgba(0, 255, 136, 0.4);
+}
+
+.stat.warning {
+  background: rgba(179, 179, 255, 0.1);
+  border-color: rgba(179, 179, 255, 0.2);
+}
+
+.stat .label {
+  opacity: 0.8;
+  font-size: 0.9rem;
+  color: #b3b3ff;
+}
+
+.stat .value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #00ff88;
+}
+
+.stat .badge {
+  background: #00ff88;
+  color: #0f0f1e;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+thead {
+  background-color: rgba(0, 255, 136, 0.1);
+  border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+}
+
+th {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #00ff88;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+  text-align: center;
+  font-weight: 500;
+  color: #b3b3ff;
+  transition: all 0.3s ease;
+}
+
+tbody tr.even {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+tbody tr.odd {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+tbody tr:hover {
+  background-color: rgba(0, 255, 136, 0.08);
+  box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.1);
+}
+
+.match-number {
+  background-color: rgba(0, 255, 136, 0.15);
+  font-weight: 700;
+  color: #00ff88;
+}
+
+.red-alliance {
+  background-color: rgba(198, 40, 40, 0.2);
+  color: #ff9999;
+  font-weight: 600;
+}
+
+.blue-alliance {
+  background-color: rgba(21, 101, 192, 0.2);
+  color: #64b5f6;
+  font-weight: 600;
+}
+
+.export-section {
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(0, 255, 136, 0.2);
+  display: flex;
+  justify-content: center;
+}
+
+.export-btn {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #00ff88 0%, #b300ff 100%);
+  color: #0f0f1e;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+}
+
+.export-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+}
+
+.no-data {
+  padding: 2rem;
+  text-align: center;
+  color: #b3b3ff;
+}
+
+@media (max-width: 768px) {
+  th,
+  td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .schedule-header h2 {
+    font-size: 1.3rem;
+  }
+}
