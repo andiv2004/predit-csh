@@ -2,22 +2,51 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a0f2e 100%);
+  background: linear-gradient(135deg, #0a0a14 0%, #1a0f2e 100%);
 }
 
 .App-header {
-  background: linear-gradient(135deg, #00ff88 0%, #b300ff 100%);
-  color: #0f0f1e;
+  background: linear-gradient(135deg, #9d8bb8 0%, #5CDD7C 100%);
+  color: #ffffff;
   padding: 2rem;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
-  animation: slideDown 0.6s ease-out;
+  box-shadow: 0 4px 20px rgba(92, 221, 124, 0.35);
+  animation: slideDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), glowPulse 3s ease-in-out infinite;
 }
 
 @keyframes slideDown {
   from {
     opacity: 0;
     transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(92, 221, 124, 0.35);
+  }
+  50% {
+    box-shadow: 0 8px 40px rgba(92, 221, 124, 0.5), inset 0 0 20px rgba(92, 221, 124, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -55,20 +84,39 @@
 
 .generate-btn {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #00ff88 0%, #b300ff 100%);
-  color: #0f0f1e;
+  background: linear-gradient(135deg, #9d8bb8 0%, #5CDD7C 100%);
+  background-size: 200% 200%;
+  color: #2d2d3d;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 15px rgba(92, 221, 124, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.generate-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 0.5s;
+}
+
+.generate-btn:hover::before {
+  left: 100%;
 }
 
 .generate-btn:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(92, 221, 124, 0.45), inset 0 0 20px rgba(92, 221, 124, 0.15);
+  filter: brightness(1.15);
 }
 
 .generate-btn:disabled {
@@ -77,26 +125,40 @@
 }
 
 .generate-btn.rankings-btn {
-  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
-  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+  background: linear-gradient(135deg, #d4a500 0%, #c9a050 100%);
+  background-size: 200% 200%;
+  color: #2d2d3d;
+  box-shadow: 0 4px 15px rgba(212, 165, 0, 0.2);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .generate-btn.rankings-btn:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.5);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(212, 165, 0, 0.35), inset 0 0 20px rgba(212, 165, 0, 0.1);
+  filter: brightness(1.2);
 }
 
 .empty-schedule {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(157, 139, 184, 0.15);
   padding: 3rem;
   border-radius: 8px;
-  border: 2px dashed rgba(0, 255, 136, 0.3);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 2px dashed rgba(92, 221, 124, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
-  color: #b3b3ff;
+  color: #c8c8e8;
   font-size: 1.1rem;
   margin-top: 1.5rem;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.empty-schedule:hover {
+  border-color: rgba(92, 221, 124, 0.6);
+  box-shadow: 0 4px 20px rgba(92, 221, 124, 0.25);
+  background: rgba(157, 139, 184, 0.25);
+  transform: translateY(-5px);
 }
 
 .empty-schedule:hover {
@@ -120,7 +182,7 @@
   text-align: center;
   padding: 2rem;
   font-size: 1.2rem;
-  color: #00ff88;
+  color: #5CDD7C;
   font-weight: 500;
   animation: pulse 1.5s infinite;
 }

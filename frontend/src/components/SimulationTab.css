@@ -1,18 +1,37 @@
 .simulation-tab {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(45, 27, 78, 0.25);
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(179, 0, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(92, 221, 124, 0.12);
   overflow: hidden;
   margin-top: 2rem;
-  border: 1px solid rgba(179, 0, 255, 0.1);
+  border: 1px solid rgba(92, 221, 124, 0.2);
   backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInUp 0.6s ease-out 0.35s both;
+}
+
+.simulation-tab:hover {
+  box-shadow: 0 12px 48px rgba(92, 221, 124, 0.2), inset 0 0 30px rgba(92, 221, 124, 0.05);
+  border-color: rgba(92, 221, 124, 0.3);
+  transform: translateY(-5px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .sim-header {
-  background: linear-gradient(135deg, #b300ff 0%, #7700cc 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #2d1b4e 0%, #5CDD7C 100%);
+  color: #ffffff;
   padding: 1.5rem;
-  border-bottom: 4px solid #b300ff;
+  border-bottom: 4px solid #5CDD7C;
 }
 
 .sim-header h2 {
@@ -30,31 +49,32 @@
   display: flex;
   gap: 1rem;
   padding: 1.5rem;
-  border-bottom: 1px solid rgba(179, 0, 255, 0.2);
+  border-bottom: 1px solid rgba(92, 221, 124, 0.2);
 }
 
 .mode-btn {
   flex: 1;
   padding: 0.75rem 1rem;
-  background: rgba(179, 0, 255, 0.1);
-  border: 2px solid rgba(179, 0, 255, 0.3);
+  background: rgba(92, 221, 124, 0.15);
+  border: 2px solid rgba(92, 221, 124, 0.4);
   color: #b3b3ff;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .mode-btn:hover {
-  background: rgba(179, 0, 255, 0.15);
-  border-color: rgba(179, 0, 255, 0.5);
+  background: rgba(92, 221, 124, 0.2);
+  border-color: rgba(92, 221, 124, 0.6);
+  transform: translateY(-2px);
 }
 
 .mode-btn.active {
-  background: linear-gradient(135deg, #b300ff 0%, #7700cc 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #2d1b4e 0%, #5CDD7C 100%);
+  color: #ffffff;
   border-color: transparent;
-  box-shadow: 0 4px 15px rgba(179, 0, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(92, 221, 124, 0.4);
 }
 
 .sim-config {
@@ -73,43 +93,44 @@
 
 .sim-config label {
   font-weight: 600;
-  color: #b300ff;
+  color: #5CDD7C;
   font-size: 0.95rem;
 }
 
 .sim-config select {
   padding: 0.75rem;
-  border: 2px solid rgba(179, 0, 255, 0.3);
+  border: 2px solid rgba(92, 221, 124, 0.3);
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(45, 27, 78, 0.3);
   color: #fff;
   font-family: inherit;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   min-width: 300px;
 }
 
 .sim-config select:focus {
   outline: none;
-  border-color: #b300ff;
-  box-shadow: 0 0 12px rgba(179, 0, 255, 0.3);
+  border-color: #5CDD7C;
+  box-shadow: 0 0 15px rgba(92, 221, 124, 0.4);
 }
 
 .simulate-btn {
   padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, #b300ff 0%, #7700cc 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #2d1b4e 0%, #5CDD7C 100%);
+  color: #ffffff;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 4px 15px rgba(179, 0, 255, 0.2);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 15px rgba(92, 221, 124, 0.2);
 }
 
 .simulate-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(179, 0, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(92, 221, 124, 0.4);
+  filter: brightness(1.1);
 }
 
 .simulate-btn:disabled {
@@ -137,7 +158,7 @@
 
 .result-header h3 {
   margin: 0;
-  color: #b300ff;
+  color: #5CDD7C;
   font-size: 1.4rem;
 }
 
@@ -149,17 +170,18 @@
 }
 
 .stat-card {
-  background: rgba(179, 0, 255, 0.1);
-  border: 1px solid rgba(179, 0, 255, 0.2);
+  background: rgba(92, 221, 124, 0.15);
+  border: 1px solid rgba(92, 221, 124, 0.25);
   border-radius: 8px;
   padding: 1.5rem;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .stat-card:hover {
-  background: rgba(179, 0, 255, 0.15);
-  box-shadow: 0 4px 12px rgba(179, 0, 255, 0.2);
+  background: rgba(92, 221, 124, 0.2);
+  box-shadow: 0 4px 15px rgba(92, 221, 124, 0.3);
+  transform: translateY(-3px);
 }
 
 .stat-label {
@@ -169,21 +191,21 @@
 }
 
 .stat-value {
-  color: #b300ff;
+  color: #5CDD7C;
   font-size: 2rem;
   font-weight: 700;
 }
 
 .distribution {
-  background: rgba(179, 0, 255, 0.05);
-  border: 1px solid rgba(179, 0, 255, 0.15);
+  background: rgba(92, 221, 124, 0.08);
+  border: 1px solid rgba(92, 221, 124, 0.2);
   border-radius: 8px;
   padding: 1.5rem;
 }
 
 .distribution h4 {
   margin: 0 0 1rem 0;
-  color: #b300ff;
+  color: #5CDD7C;
 }
 
 .dist-items {
@@ -205,15 +227,15 @@
 
 .progress-bar {
   height: 8px;
-  background: rgba(179, 0, 255, 0.1);
+  background: rgba(92, 221, 124, 0.15);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #b300ff 0%, #ff00ff 100%);
-  transition: width 0.6s ease;
+  background: linear-gradient(90deg, #2d1b4e 0%, #5CDD7C 100%);
+  transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .comparison-grid {
@@ -224,15 +246,21 @@
 }
 
 .team-box {
-  background: rgba(179, 0, 255, 0.08);
-  border: 1px solid rgba(179, 0, 255, 0.2);
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.25);
   border-radius: 8px;
   padding: 1.5rem;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.team-box:hover {
+  background: rgba(92, 221, 124, 0.15);
+  box-shadow: 0 4px 12px rgba(92, 221, 124, 0.2);
 }
 
 .team-box h4 {
   margin: 0 0 1.5rem 0;
-  color: #b300ff;
+  color: #5CDD7C;
   text-align: center;
 }
 
@@ -241,7 +269,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(179, 0, 255, 0.1);
+  border-bottom: 1px solid rgba(92, 221, 124, 0.15);
   color: #b3b3ff;
 }
 
@@ -250,7 +278,7 @@
 }
 
 .team-box .value {
-  color: #b300ff;
+  color: #5CDD7C;
   font-weight: 700;
   font-size: 1.2rem;
 }
@@ -261,7 +289,7 @@
   justify-content: center;
   font-weight: 700;
   font-size: 1.5rem;
-  color: #b300ff;
+  color: #5CDD7C;
 }
 
 .no-data {

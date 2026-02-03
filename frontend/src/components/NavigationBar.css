@@ -1,40 +1,81 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .navigation-bar {
   display: flex;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(157, 139, 184, 0.15);
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.1);
+  box-shadow: 0 4px 15px rgba(92, 221, 124, 0.15);
   margin: 1.5rem 0;
-  border-bottom: 3px solid rgba(0, 255, 136, 0.2);
+  border-bottom: 3px solid rgba(92, 221, 124, 0.35);
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInUp 0.6s ease-out;
 }
 
 .nav-tab {
   padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(0, 255, 136, 0.3);
+  background: rgba(157, 139, 184, 0.1);
+  border: 2px solid rgba(92, 221, 124, 0.35);
   border-radius: 6px;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #b3b3ff;
+  color: #d8d8f0;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(92, 221, 124, 0.25), transparent);
+  transition: left 0.6s;
+}
+
+.nav-tab:hover::before {
+  left: 100%;
 }
 
 .nav-tab:hover:not(:disabled) {
-  background: rgba(0, 255, 136, 0.1);
-  color: #00ff88;
-  border-color: #00ff88;
-  box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+  background: rgba(92, 221, 124, 0.15);
+  color: #5CDD7C;
+  border-color: #5CDD7C;
+  box-shadow: 0 0 15px rgba(92, 221, 124, 0.3);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .nav-tab.active {
-  background: linear-gradient(135deg, #00ff88 0%, #b300ff 100%);
-  color: #0f0f1e;
+  background: linear-gradient(135deg, #9d8bb8 0%, #5CDD7C 100%);
+  color: #2d2d3d;
   border-color: transparent;
-  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+  box-shadow: 0 4px 15px rgba(92, 221, 124, 0.4);
+  transform: scale(1.05);
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(92, 221, 124, 0.4);
+  }
+  50% {
+    box-shadow: 0 6px 25px rgba(92, 221, 124, 0.6), inset 0 0 15px rgba(92, 221, 124, 0.2);
+  }
 }
 
 .nav-tab:disabled {

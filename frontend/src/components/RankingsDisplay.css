@@ -1,18 +1,27 @@
 .rankings-display {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(45, 27, 78, 0.2);
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(255, 193, 7, 0.1);
+  box-shadow: 0 8px 32px rgba(255, 193, 7, 0.12);
   overflow: hidden;
   margin-top: 2rem;
-  border: 1px solid rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.15);
   backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.rankings-display:hover {
+  box-shadow: 0 12px 48px rgba(212, 165, 0, 0.2), inset 0 0 30px rgba(212, 165, 0, 0.05);
+  border-color: rgba(212, 165, 0, 0.3);
+  transform: translateY(-5px);
 }
 
 .rankings-header {
-  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
-  color: #0f0f1e;
+  background: linear-gradient(135deg, #d4a500 0%, #a68400 100%);
+  color: #ffffff;
   padding: 1.5rem;
-  border-bottom: 4px solid #ffd700;
+  border-bottom: 4px solid #d4a500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .rankings-header h2 {
@@ -33,7 +42,7 @@
 }
 
 .stat {
-  background: rgba(255, 193, 7, 0.15);
+  background: rgba(212, 165, 0, 0.15);
   padding: 0.75rem 1rem;
   border-radius: 6px;
   display: flex;
@@ -41,13 +50,13 @@
   align-items: center;
   gap: 0.3rem;
   font-weight: 600;
-  border: 1px solid rgba(255, 193, 7, 0.3);
+  border: 1px solid rgba(212, 165, 0, 0.3);
   transition: all 0.3s ease;
 }
 
 .stat.top-1 {
-  background: rgba(255, 193, 7, 0.25);
-  border-color: rgba(255, 193, 7, 0.5);
+  background: rgba(212, 165, 0, 0.25);
+  border-color: rgba(212, 165, 0, 0.5);
 }
 
 .stat.top-2 {
@@ -69,7 +78,7 @@
 .stat .value {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #ffd700;
+  color: #d4a500;
 }
 
 .stat .team-name {
@@ -90,35 +99,35 @@ table {
 }
 
 thead {
-  background-color: rgba(255, 193, 7, 0.1);
-  border-bottom: 2px solid rgba(255, 193, 7, 0.2);
+  background-color: rgba(212, 165, 0, 0.12);
+  border-bottom: 2px solid rgba(212, 165, 0, 0.25);
 }
 
 th {
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: #ffd700;
-  transition: all 0.3s ease;
+  color: #d4a500;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(255, 193, 7, 0.1);
+  border-bottom: 1px solid rgba(212, 165, 0, 0.12);
   color: #b3b3ff;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .rank-position {
   font-weight: 700;
-  color: #ffd700;
-  background-color: rgba(255, 193, 7, 0.15);
+  color: #d4a500;
+  background-color: rgba(212, 165, 0, 0.2);
   text-align: center;
 }
 
 .team-number {
   font-weight: 600;
-  color: #00ff88;
+  color: #5CDD7C;
 }
 
 .team-name {
@@ -128,13 +137,13 @@ td {
 .ranking-score {
   font-weight: 600;
   text-align: center;
-  color: #ffd700;
+  color: #d4a500;
 }
 
 .win-loss {
   text-align: center;
   font-weight: 600;
-  color: #00ff88;
+  color: #5CDD7C;
 }
 
 .tbp1 {
@@ -154,47 +163,52 @@ td {
 }
 
 tbody tr.top-1 {
-  background-color: rgba(255, 193, 7, 0.1);
-  box-shadow: inset 0 0 10px rgba(255, 193, 7, 0.1);
+  background-color: rgba(212, 165, 0, 0.15);
+  box-shadow: inset 0 0 10px rgba(212, 165, 0, 0.15);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 tbody tr.top-2 {
-  background-color: rgba(192, 192, 192, 0.08);
+  background-color: rgba(192, 192, 192, 0.1);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 tbody tr.top-3 {
-  background-color: rgba(205, 127, 50, 0.08);
+  background-color: rgba(205, 127, 50, 0.1);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 tbody tr:hover {
-  background-color: rgba(255, 193, 7, 0.12);
-  box-shadow: inset 0 0 15px rgba(255, 193, 7, 0.15);
+  background-color: rgba(212, 165, 0, 0.15);
+  box-shadow: inset 0 0 15px rgba(212, 165, 0, 0.18);
 }
 
 .export-section {
   padding: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.03);
-  border-top: 1px solid rgba(255, 193, 7, 0.2);
+  background-color: rgba(45, 27, 78, 0.15);
+  border-top: 1px solid rgba(212, 165, 0, 0.2);
   display: flex;
   justify-content: center;
 }
 
 .export-btn {
   padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
-  color: #0f0f1e;
-  border: none;
+  background: linear-gradient(135deg, #d4a500 0%, #a68400 100%);
+  color: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 15px rgba(212, 165, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .export-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+  box-shadow: 0 6px 20px rgba(212, 165, 0, 0.4);
+  filter: brightness(1.15);
 }
 
 .no-data {

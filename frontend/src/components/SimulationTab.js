@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SimulationCharts from './SimulationCharts';
 import './SimulationTab.css';
 
 function SimulationTab({ eventData, eventName, currentEvent, loading, onSimulationComplete }) {
@@ -198,56 +199,7 @@ function SimulationTab({ eventData, eventName, currentEvent, loading, onSimulati
               <div className="result-header">
                 <h3>📊 Rezultate Simulare - Echipa {simResults.team}</h3>
               </div>
-              <div className="stats-grid">
-                <div className="stat-card">
-                  <div className="stat-label">Poziție Medie</div>
-                  <div className="stat-value">{simResults.avg_position}</div>
-                </div>
-                <div className="stat-card">
-                  <div className="stat-label">Minim</div>
-                  <div className="stat-value">{simResults.min_position}</div>
-                </div>
-                <div className="stat-card">
-                  <div className="stat-label">Maxim</div>
-                  <div className="stat-value">{simResults.max_position}</div>
-                </div>
-                <div className="stat-card">
-                  <div className="stat-label">Victorii Medii</div>
-                  <div className="stat-value">{simResults.avg_wins}</div>
-                </div>
-              </div>
-              <div className="distribution">
-                <h4>📍 Distribuție Poziții</h4>
-                <div className="dist-items">
-                  <div className="dist-item">
-                    <span>Top 10: {simResults.position_distribution.top_10}/100</span>
-                    <div className="progress-bar">
-                      <div 
-                        className="progress-fill" 
-                        style={{width: `${simResults.position_distribution.top_10}%`}}
-                      ></div>
-                    </div>
-                  </div>
-                  <div className="dist-item">
-                    <span>Top 20: {simResults.position_distribution.top_20}/100</span>
-                    <div className="progress-bar">
-                      <div 
-                        className="progress-fill" 
-                        style={{width: `${simResults.position_distribution.top_20}%`}}
-                      ></div>
-                    </div>
-                  </div>
-                  <div className="dist-item">
-                    <span>Top 50: {simResults.position_distribution.top_50}/100</span>
-                    <div className="progress-bar">
-                      <div 
-                        className="progress-fill" 
-                        style={{width: `${simResults.position_distribution.top_50}%`}}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <SimulationCharts simResults={simResults} teamNumber={simResults.team} />
             </div>
           ) : (
             <div className="comparison-results">

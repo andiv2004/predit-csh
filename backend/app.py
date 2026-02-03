@@ -9,6 +9,8 @@ from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 from functools import lru_cache
 from datetime import datetime, timedelta
+from auth import require_auth
+
 
 
 ########################3
@@ -234,7 +236,7 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 
 # Cache de date
 cache = {}
-CACHE_EXPIRY = 3600  # 1 ora în secunde
+CACHE_EXPIRY = 7200
 
 def get_cache_file(key):
     """Obține path-ul fisierului de cache"""
@@ -259,23 +261,73 @@ def load_cache_from_disk():
                 print(f"⚠️ Eroare la încărcarea {filename}: {e}")
 
 def get_cache(key):
-    """Obține din cache dacă nu a expirat"""
+    """Obține din cache (memoria sau disk) dacă nu a expirat"""
+    # 1. Încearcă să găsească în memoria RAM (cache dict)
     if key in cache:
         data, expiry_time_str = cache[key]
         if expiry_time_str:
             expiry_time = datetime.fromisoformat(expiry_time_str)
             if datetime.now() < expiry_time:
-                print(f"✨ Cache hit pentru {key}")
+                print(f"✨ Cache HIT (RAM) pentru {key}")
                 return data
+        # Cache a expirat, șterge-l
         del cache[key]
-        # Șterge și din disk
         cache_file = get_cache_file(key)
         if os.path.exists(cache_file):
             os.remove(cache_file)
+        return None
+    
+    # 2. FALLBACK: Încearcă să găsească pe disk dacă nu e în RAM
+    cache_file = get_cache_file(key)
+    if os.path.exists(cache_file):
+        try:
+            with open(cache_file, 'r') as f:
+                data = json.load(f)
+                expiry_time_str = data.get('_expiry')
+                
+                # Verifică dacă a expirat
+                if expiry_time_str:
+                    expiry_time = datetime.fromisoformat(expiry_time_str)
+                    if datetime.now() < expiry_time:
+                        # Cache valid! Încarcă-l în RAM pentru viitoare
+                        cache[key] = (data, expiry_time_str)
+                        print(f"✨ Cache HIT (DISK) pentru {key} - reîncărcat în RAM")
+                        return data
+                    else:
+                        # Cache expirat, șterge-l
+                        os.remove(cache_file)
+                        print(f"⏰ Cache expirat pentru {key}")
+                        return None
+        except Exception as e:
+            print(f"⚠️ Eroare la citirea cache din disk ({key}): {e}")
+            return None
+    
     return None
 
 def set_cache(key, data):
-    """Salvează în cache și pe disk"""
+    """Salvează în cache și pe disk - NU suprascrie dacă deja există și e valid"""
+    cache_file = get_cache_file(key)
+    
+    # VERIFICARE: Dacă fișierul deja există și e valid, NU rescrie pe disk
+    if os.path.exists(cache_file):
+        try:
+            with open(cache_file, 'r') as f:
+                existing_data = json.load(f)
+                expiry_time_str = existing_data.get('_expiry')
+                
+                # Dacă cache-ul nu a expirat, nu rescriu nimic
+                if expiry_time_str:
+                    expiry_time = datetime.fromisoformat(expiry_time_str)
+                    if datetime.now() < expiry_time:
+                        print(f"✅ Cache deja există și e valid pentru {key} - NU rescriu")
+                        # Doar încarcă în RAM dacă nu e deja acolo
+                        if key not in cache:
+                            cache[key] = (existing_data, expiry_time_str)
+                        return
+        except Exception as e:
+            print(f"⚠️ Eroare la verificarea cache existent: {e}")
+    
+    # Dacă nu există sau a expirat, rescrie complet
     expiry_time = datetime.now() + timedelta(seconds=CACHE_EXPIRY)
     expiry_str = expiry_time.isoformat()
     
@@ -294,11 +346,10 @@ def set_cache(key, data):
     cache[key] = (json_data, expiry_str)
     
     # Salvez pe disk
-    cache_file = get_cache_file(key)
     try:
         with open(cache_file, 'w') as f:
             json.dump(json_data, f, default=str)
-        print(f"💾 Salvat în cache (disk): {key}")
+        print(f"💾 Salvat (NOU) în cache (disk): {key}")
     except Exception as e:
         print(f"⚠️ Eroare la salvare cache: {e}")
 
@@ -307,6 +358,12 @@ CORS(app)
 
 # Încarcă cache-ul din disk la startup
 load_cache_from_disk()
+
+# DEBUG: Afișează ce e în cache
+print(f"\n📦 Cache loader STARTUP - {len(cache)} intrări în memorie")
+if cache:
+    for key in list(cache.keys())[:5]:  # Arată primele 5
+        print(f"   - {key}")
 
 # Configurație GraphQL
 transport = RequestsHTTPTransport(url="https://api.ftcscout.org/graphql")
@@ -317,12 +374,17 @@ def get_event_season_report(event_code, season=2025):
     # Verifică cache
     cache_key = f"{event_code}_{season}"
     cached_data = get_cache(cache_key)
+    
     if cached_data:
-        # Reconstituie DataFrame din dict
-        df = pd.DataFrame(cached_data['data'])
-        event_name = cached_data['event_name']
-        print(f"✨ Cache hit! Returnez date pentru {event_code}")
-        return df, event_name
+        try:
+            # Reconstituie DataFrame din dict
+            df = pd.DataFrame(cached_data['data'])
+            event_name = cached_data['event_name']
+            print(f"✨ Cache HIT pentru {event_code}_{season}! Se folosesc datele cached.")
+            return df, event_name
+        except Exception as e:
+            print(f"⚠️ Eroare la reconstructia cache: {e}")
+            # Dacă nu poți reconstrui, continua cu fetch-ul normal
     
     try:
         # 1. Luăm lista de echipe de la eveniment
@@ -398,63 +460,96 @@ def get_event_season_report(event_code, season=2025):
         print(f"❌ Eroare generală: {e}")
         return None, str(e)
 
-def generate_ftc_schedule_pro(teams_data, matches_per_team=6, max_retries=200):
-    """Generează program FTC cu alianțe unice"""
-    teams = teams_data['Team'].tolist()
-    available_pool = []
-    for team in teams:
-        available_pool.extend([team] * matches_per_team)
-
-    num_matches = len(available_pool) // 4
+def generate_ftc_schedule_pro(teams_data, matches_per_team=6, max_retries=50):
+    """
+    Generează program FTC cu distribuție uniformă a meciurilor și evitare de alianțe duplicate.
+    Inspirat de algoritm cu:
+    - Tracker pentru match_counts (fiecare echipă știm câte meciuri a jucat)
+    - Tracker pentru previous_match_teams (echipele care abia au jucat)
+    - played_together set pentru a evita duplicate de alianțe
+    """
+    teams_list = teams_data['Team'].tolist()
+    num_teams = len(teams_list)
+    
+    # 1. Inițializare trackers
+    match_counts = {team: 0 for team in teams_list}
+    played_together = set()  # Alianțe folosite
+    previous_match_teams = set()  # Echipele din meciul anterior
+    
+    # 2. Calculare total meciuri
+    total_slots_needed = num_teams * matches_per_team
+    total_matches = int(total_slots_needed / 4)
+    
     schedule = []
-    last_match_teams = set()
-    past_alliances = set()
     duplicate_alliance_count = 0
-
-    for m in range(num_matches):
-        unique_available = list(set(available_pool))
-        if len(unique_available) < 4:
-            break
-
-        best_match = None
-
-        # Încercăm să găsim o combinație fără duplicate
-        for _ in range(max_retries):
-            candidates = [t for t in unique_available if t not in last_match_teams]
-            if len(candidates) < 4: 
-                candidates = unique_available
-
-            selected = random.sample(candidates, k=4)
-            random.shuffle(selected)
-
-            red_pair = tuple(sorted((selected[0], selected[1])))
-            blue_pair = tuple(sorted((selected[2], selected[3])))
-
-            if red_pair not in past_alliances and blue_pair not in past_alliances:
-                best_match = selected
-                past_alliances.add(red_pair)
-                past_alliances.add(blue_pair)
+    
+    print(f"📊 Generare program: {num_teams} echipe, ~{total_matches} meciuri, {matches_per_team} meciuri/echipă")
+    
+    # 3. Bucla de generare meciuri
+    for m in range(total_matches):
+        valid_match_found = False
+        attempts = 0
+        
+        candidates = []
+        
+        while not valid_match_found and attempts < max_retries:
+            # A. Sortăm echipele după:
+            #    1. Câte meciuri au jucat (puține = prioritate)
+            #    2. Dacă au jucat în meciul anterior (recent = puțină prioritate)
+            teams_list_copy = teams_list.copy()
+            random.shuffle(teams_list_copy)
+            teams_list_copy.sort(key=lambda x: (match_counts[x], x in previous_match_teams))
+            
+            # Luăm primele 4 echipe (cele mai "odihnite")
+            candidates = teams_list_copy[:4]
+            
+            # Verificare siguranță
+            if len(set(candidates)) < 4:
                 break
-
-        # Dacă nu s-a găsit o alianță unică după max_retries
-        if best_match is None:
+            
+            # B. Încercăm să formăm alianțe nefolosite
+            for _ in range(5):
+                random.shuffle(candidates)
+                
+                red_alliance = frozenset([candidates[0], candidates[1]])
+                blue_alliance = frozenset([candidates[2], candidates[3]])
+                
+                # Verificare: alianțele nu au fost folosite înainte
+                if (red_alliance not in played_together) and (blue_alliance not in played_together):
+                    valid_match_found = True
+                    played_together.add(red_alliance)
+                    played_together.add(blue_alliance)
+                    break
+            
+            attempts += 1
+        
+        # C. Fallback: acceptăm duplicate dacă nu avem încotro
+        if not valid_match_found:
             duplicate_alliance_count += 1
-            best_match = random.sample(unique_available, k=4)
-            past_alliances.add(tuple(sorted((best_match[0], best_match[1]))))
-            past_alliances.add(tuple(sorted((best_match[2], best_match[3]))))
-
-        for t in best_match:
-            available_pool.remove(t)
-
+            red_alliance = frozenset([candidates[0], candidates[1]])
+            blue_alliance = frozenset([candidates[2], candidates[3]])
+            played_together.add(red_alliance)
+            played_together.add(blue_alliance)
+        
+        # D. Actualizăm contorul de meciuri
+        for team in candidates:
+            match_counts[team] += 1
+        
+        # E. Salvez cine a jucat acum (pentru meciurile viitoare)
+        previous_match_teams = set(candidates)
+        
+        # F. Salvez meciurile
         schedule.append({
             'Match': m + 1,
-            'Red 1': int(best_match[0]), 
-            'Red 2': int(best_match[1]),
-            'Blue 1': int(best_match[2]), 
-            'Blue 2': int(best_match[3])
+            'Red 1': int(candidates[0]), 
+            'Red 2': int(candidates[1]),
+            'Blue 1': int(candidates[2]), 
+            'Blue 2': int(candidates[3])
         })
-        last_match_teams = set(best_match)
-
+    
+    print(f"✅ Program generat: {len(schedule)} meciuri, {duplicate_alliance_count} alianțe duplicate")
+    print(f"📊 Distribuție: {min(match_counts.values())} - {max(match_counts.values())} meciuri/echipă")
+    
     return pd.DataFrame(schedule), duplicate_alliance_count
 
 def run_full_schedule_prediction_v5(schedule_df, teams_data):
@@ -1136,6 +1231,7 @@ def compare_teams(event_code):
         return jsonify({"error": str(e)}), 500
 
 # Servește frontend-ul React
+
 @app.route('/')
 @app.route('/<path:path>')
 def serve_static(path='index.html'):

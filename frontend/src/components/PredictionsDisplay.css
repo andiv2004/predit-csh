@@ -1,18 +1,26 @@
 .predictions-display {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(45, 27, 78, 0.2);
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+  box-shadow: 0 8px 32px rgba(92, 221, 124, 0.12);
   overflow: hidden;
   margin-top: 2rem;
-  border: 1px solid rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(92, 221, 124, 0.15);
   backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.predictions-display:hover {
+  box-shadow: 0 12px 48px rgba(92, 221, 124, 0.2), inset 0 0 30px rgba(92, 221, 124, 0.05);
+  border-color: rgba(92, 221, 124, 0.3);
+  transform: translateY(-5px);
 }
 
 .predictions-header {
-  background: linear-gradient(135deg, #00ff88 0%, #b300ff 100%);
-  color: #0f0f1e;
+  background: linear-gradient(135deg, #2d1b4e 0%, #5CDD7C 100%);
+  color: #ffffff;
   padding: 1.5rem;
-  border-bottom: 4px solid #00ff88;
+  border-bottom: 4px solid #5CDD7C;
 }
 
 .predictions-header h2 {
@@ -33,14 +41,14 @@
 }
 
 .stat {
-  background: rgba(0, 255, 136, 0.1);
+  background: rgba(92, 221, 124, 0.1);
   padding: 0.75rem 1rem;
   border-radius: 6px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
-  border: 1px solid rgba(0, 255, 136, 0.2);
+  border: 1px solid rgba(92, 221, 124, 0.2);
   transition: all 0.3s ease;
 }
 
@@ -68,7 +76,7 @@
 .stat .value {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #00ff88;
+  color: #5CDD7C;
 }
 
 .table-wrapper {
@@ -82,29 +90,29 @@ table {
 }
 
 thead {
-  background-color: rgba(0, 255, 136, 0.1);
-  border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+  background-color: rgba(92, 221, 124, 0.12);
+  border-bottom: 2px solid rgba(92, 221, 124, 0.25);
 }
 
 th {
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: #00ff88;
-  transition: all 0.3s ease;
+  color: #5CDD7C;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+  border-bottom: 1px solid rgba(92, 221, 124, 0.12);
   color: #b3b3ff;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .match-number {
   font-weight: 700;
-  color: #00ff88;
-  background-color: rgba(0, 255, 136, 0.15);
+  color: #5CDD7C;
+  background-color: rgba(92, 221, 124, 0.15);
 }
 
 .alliance-names {
@@ -146,46 +154,49 @@ td {
 }
 
 tbody tr.red-win {
-  background-color: rgba(198, 40, 40, 0.15);
+  background-color: rgba(198, 40, 40, 0.2);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 tbody tr.blue-win {
-  background-color: rgba(21, 101, 192, 0.15);
+  background-color: rgba(21, 101, 192, 0.2);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 tbody tr.draw {
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: rgba(45, 27, 78, 0.2);
 }
 
 tbody tr:hover {
-  background-color: rgba(0, 255, 136, 0.08);
-  box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.1);
+  background-color: rgba(92, 221, 124, 0.12);
+  box-shadow: inset 0 0 15px rgba(92, 221, 124, 0.15);
 }
 
 .export-section {
   padding: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.03);
-  border-top: 1px solid rgba(0, 255, 136, 0.2);
+  background-color: rgba(45, 27, 78, 0.15);
+  border-top: 1px solid rgba(92, 221, 124, 0.2);
   display: flex;
   justify-content: center;
 }
 
 .export-btn {
   padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, #00ff88 0%, #b300ff 100%);
-  color: #0f0f1e;
+  background: linear-gradient(135deg, #2d1b4e 0%, #5CDD7C 100%);
+  color: #ffffff;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 15px rgba(92, 221, 124, 0.2);
 }
 
 .export-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+  box-shadow: 0 6px 20px rgba(92, 221, 124, 0.4);
+  filter: brightness(1.1);
 }
 
 .no-data {

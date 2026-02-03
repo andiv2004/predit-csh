@@ -1,18 +1,26 @@
 .data-display {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(157, 139, 184, 0.1);
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+  box-shadow: 0 8px 32px rgba(92, 221, 124, 0.08);
   overflow: hidden;
-  border: 1px solid rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(92, 221, 124, 0.15);
   backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.data-display:hover {
+  box-shadow: 0 12px 48px rgba(92, 221, 124, 0.15), inset 0 0 30px rgba(92, 221, 124, 0.03);
+  border-color: rgba(92, 221, 124, 0.25);
+  transform: translateY(-5px);
 }
 
 .data-header {
-  background: linear-gradient(135deg, #00ff88 0%, #b300ff 100%);
-  color: #0f0f1e;
+  background: linear-gradient(135deg, #9d8bb8 0%, #5CDD7C 100%);
+  color: #2d2d3d;
   padding: 1.5rem;
-  border-bottom: 4px solid #00ff88;
-  transition: all 0.3s ease;
+  border-bottom: 4px solid #5CDD7C;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .data-header h2 {
@@ -37,17 +45,17 @@ table {
 }
 
 thead {
-  background-color: rgba(0, 255, 136, 0.1);
-  border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+  background-color: rgba(92, 221, 124, 0.1);
+  border-bottom: 2px solid rgba(92, 221, 124, 0.2);
 }
 
 th {
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: #00ff88;
+  color: #5CDD7C;
   white-space: nowrap;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 th.sortable {
@@ -56,48 +64,48 @@ th.sortable {
 }
 
 th.sortable:hover {
-  background-color: rgba(0, 255, 136, 0.15);
-  color: #b300ff;
+  background-color: rgba(92, 221, 124, 0.15);
+  color: #5CDD7C;
 }
 
 th.sortable.active {
-  background-color: rgba(0, 255, 136, 0.2);
-  color: #b300ff;
+  background-color: rgba(92, 221, 124, 0.2);
+  color: #5CDD7C;
 }
 
 .sort-indicator {
-  color: #b300ff;
+  color: #5CDD7C;
   font-weight: 700;
 }
 
 td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
-  color: #b3b3ff;
-  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(92, 221, 124, 0.1);
+  color: #d8d8f0;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 tbody tr.even {
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: rgba(157, 139, 184, 0.1);
 }
 
 tbody tr.odd {
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: rgba(157, 139, 184, 0.05);
 }
 
 tbody tr:hover {
-  background-color: rgba(0, 255, 136, 0.08);
-  box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.1);
+  background-color: rgba(92, 221, 124, 0.1);
+  box-shadow: inset 0 0 15px rgba(92, 221, 124, 0.1);
 }
 
 .no-data {
   padding: 2rem;
   text-align: center;
-  color: #b3b3ff;
-  background: rgba(255, 255, 255, 0.03);
+  color: #d8d8f0;
+  background: rgba(157, 139, 184, 0.1);
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
-  border: 2px dashed rgba(0, 255, 136, 0.3);
+  box-shadow: 0 8px 32px rgba(92, 221, 124, 0.08);
+  border: 2px dashed rgba(92, 221, 124, 0.25);
 }
 
 @media (max-width: 768px) {
